@@ -1,0 +1,10 @@
+
+The netconf and network_cli connection plug-ins connect to network devices. These were introduced NEW in version 2.5.
+The NETWORK_CLI plug-in sends and receives network device CLI commands. 
+> ansible-doc -t connection network_cli
+
+> ansible-inventory -i inventory --graph
+
+> ansible -m debug -a "var=ansible_user" vyos
+
+> ansible -m ping vyos

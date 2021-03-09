@@ -1,0 +1,28 @@
+---
+- name: >
+    show us the target interface
+    but only if it is UP
+
+  hosts: ios
+  gather_facts: no
+  vars:
+    target_interface: GigabitEthernet4
+
+  tasks:
+
+    - name: gather facts
+      ios_facts:
+        gather_subset: all
+        when: ansible_network_os == 'ios'
+
+    - name: display facts
+      # 'ansible_net_interfaces' fact is a dict of interfaces
+      # with interface name as key
+      debug:
+        msg: "{{ item }}"
+      with_dict: "{{ ansible_net_interfaces }}"
+      when:
+        # Multiple conditions that all need to be true
+        # (a logical 'and') can be specified as a list
+        - item.key == target_interface
+        - item.value['operstatus'] == 'up'

@@ -1,0 +1,24 @@
+---
+- name: >
+    an illustration of
+    ignoring errors on a task
+
+  hosts: ios
+  gather_facts: no
+  vars:
+    intf: Interface GigabitEthernet16
+
+  tasks:
+
+    - name: a failed task
+      # this task fails because
+      # no such interface exists
+      ios_config:
+        lines:
+          - shutdown
+        parents: "{{ intf }}"
+      ignore_errors: yes
+
+    - name: a good task
+      debug:
+        msg: "this is a good task"

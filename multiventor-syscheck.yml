@@ -1,0 +1,42 @@
+- name: back up config and record device health indicators
+  hosts: network
+
+  tasks:
+
+  - name: backup vyos config
+    vyos_config:
+      backup: yes
+    when: ansible_network_os == "vyos"
+
+  - name: look at vyos device health indicators
+      vyos_command:
+        commands:
+          - sh host name
+          - sh system uptime
+          - sh host domain
+          - sh host date
+          - sh host os
+          - sh sys mem
+      register: vyos_result
+      when: ansible_network_os == "vyos"
+
+  - name: backup ios config
+      ios_config:
+        backup: yes
+      when: ansible_network_os == "ios"
+
+  - name: look at ios device health indicators
+      ios_command:
+        commands:
+          - sh ver | include uptime
+          - sh ip domain
+          - sh clock
+          - sh ip name-server
+          - sh proc mem platform | include System memory
+      register: ios_result
+      when: ansible_network_os == "ios"
+
+  - name: show results
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ (vyos_result | combine(ios_result)).stdout_lines }}"

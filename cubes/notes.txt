@@ -1,0 +1,52 @@
+Using Netconf or Network_Cli
+Which should I use?
+
+The target platforms (the network devices you will be managing) must be supported by the connection method you use to manage them.
+
+Network_Cli
+This connection plug-in provides a connection to remote devices over the SSH and implements a CLI shell. It is typically used by network devices for sending and receiving CLI commands to network devices. This connection method supports a broad variety of network devices, including the IOS and VyOS devices in the Lab Environment.
+
+Netconf
+This connection plug-in provides a persistent connection to remote devices over the SSH NETCONF subsystem. It is typically used by network devices for sending and receiving RPC calls over NETCONF. This plug-in requires ncclient to be installed on the local Ansible controller. It does not currently support the network devices in the Lab Environment.
+
+
+
+-> inventory example 
+[ios]
+1.1.1.1
+
+[ios:vars]
+ansible_network_os=ios
+ansible_user=abx 
+ansible_ssh_pass=thisIsNotThePassword
+ansible_connection=network_cli
+ansible_become=true
+ansible_become_pass=ansible
+
+
+
+
+
+
+IOS
+
+The classical IOS is a monolithic kernel that runs all of the necessary modules in the same memory space. This means that if something happens to the routing engine or the LED indicator, it can cause the whole IOS kernel to crash if it runs out of memory. That may have been okay years ago but today’s mission critical networks can’t afford to have a rogue process bringing down an entire chassis switch.
+
+To resolve above issue Cisco’s software engineers, rebuild the IOS CLI on a more robust platform known as IOS-XE
+
+ 
+
+IOS-XE 
+
+IOS XE runs as a system daemon on a “modern Linux platform.”  Cisco also abstracted the system functions out of the main kernel and into separate processes. That means that if one of them goes belly up it won’t take the core kernel with it. One of the other benefits of running the kernel as a system daemon is that you can now balance the workload of the processes across multiple processor cores.
+
+ 
+
+IOS-XR
+
+IOS XR is what the Mirror Universe version of IOS would look like. Much like IOS XE, IOS XR does away with the monolithic kernel and shared memory space of IOS Classic. XR uses an OS from QNX to serve as the base for the IOS functions. XR also segments the ancillary process in IOS into separate memory spaces to prevent system crashes from an errant bug. XR is aimed at the larger service provider platforms like the ASR and CRS series of routers. You can see that in the way that XR can allow multiple routing protocol processes to be executed at the same time in different memory spaces. That’s a big key to the service provider.
+
+What makes IOS XR so different from IOS Classic? That lies in the configuration method. While the CLI may resemble the IOS that you’re used to, Instead of making live config changes on a live system, the running configuration is forked into a separate memory space. Once you have created all the changes that you need to make, you have to perform a sanity check on the config before it can be moved into live production.
+
+gather facts 
+ansible -i inventory --ask-vault-pass -m ios_facts cs01 -a 'gather_subset=all'

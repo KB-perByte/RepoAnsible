@@ -1,0 +1,19 @@
+---
+- name: a play for ios devices that uses ios_facts
+  hosts: ios
+  gather_facts: no
+
+  tasks:
+    - name: look at some facts
+      ios_facts:
+        gather_subset:
+          - hardware
+
+- name: show results
+  debug:
+    msg:
+      - "model: {{ ansible_net_model }}"
+      - "version: {{ ansible_net_version }}"
+  when:
+    - ansible_net_model == 'CSR1000V'
+    - ansible_net_version is version('03.14', '>=')

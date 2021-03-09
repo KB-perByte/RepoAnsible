@@ -1,0 +1,18 @@
+---
+- name: trace the path from source (remote host) to trace_me
+  hosts: cs01
+  gather_facts: no
+
+  vars:
+    trace_me: 172.25.250.254
+
+  tasks:
+    - name: trace the path from {{ inventory_hostname }} to {{ trace_me }}
+      ios_command:
+        commands:
+          - traceroute {{ trace_me }}
+      register: path
+
+    - name: show the path from {{ inventory_hostname }} to {{ trace_me }}
+      debug:
+        msg: "{{ path }}"

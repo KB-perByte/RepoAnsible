@@ -1,0 +1,19 @@
+---
+- name: play that sets interface descriptions
+  hosts: cloud-services
+  connection: network_cli
+  tasks:
+
+    - name: backup running config
+      ios_config:
+        backup: yes
+
+    - name: label outside interface
+      ios_interface:
+        name: GigabitEthernet2
+        description: outside
+
+    - name: label inside interface
+      ios_interface:
+        name: GigabitEthernet4
+        description: inside

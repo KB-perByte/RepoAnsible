@@ -1,0 +1,5 @@
+interfaces:
+- { name: GigabitEthernet1, description: Management }
+- { name: GigabitEthernet2, description: Outside Primary }
+- { name: GigabitEthernet3, description: Outside Secondary }
+- { name: GigabitEthernet4, description: Server Link1 }
