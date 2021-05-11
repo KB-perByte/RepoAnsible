@@ -1,0 +1,10 @@
+---
+- name: Logging check 4
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Logging simple discriminator
+    cisco.ios.ios_logging_global:
+      config:
+        - discriminator: This_should_be_the_discriminator
+      state: merged

@@ -1,0 +1,15 @@
+---
+- name: Logging global check REPLACED state
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Remove as per the provided configuration
+    cisco.ios.ios_logging_global:
+      config:
+        - snmp_trap:
+            - errors
+            - warnings
+        - hosts:
+            - hostname: 10.0.1.11
+            - ipv6: 2001:0db8:85a3:0000:0000:8a2e:0370:7324
+      state: deleted

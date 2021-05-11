@@ -1,0 +1,13 @@
+---
+- name: Logging check 2
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Logging buffered
+    cisco.ios.ios_logging_global:
+      config:
+        - buffered:
+            severity: notifications
+            xml: True
+            size: 5099
+      state: merged

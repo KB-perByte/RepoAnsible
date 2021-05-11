@@ -1,0 +1,19 @@
+---
+- name: Logging global check REPLACED state
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+    - name: TEST - [replaced] Replace provided logging configuration
+      register: result
+      cisco.ios.ios_logging_global:
+        config:
+          - buffered:
+              severity: alerts
+              size: 6025
+          - facility: local6
+          - hosts:
+              - hostname: 172.16.1.19
+              - hostname: 172.16.1.10
+                filtered: true
+                stream: 15
+        state: replaced

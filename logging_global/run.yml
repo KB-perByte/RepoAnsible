@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  gather_facts: yes
+  roles:
+    - ansible_network.cli_rm_builder.run
+  vars:
+    # docstring: /home/sagpaul/MyVnvs/development/devModel/resource_module_models/models/ios/logging_global/ios_logging_global.yaml
+    rm_dest: /home/sagpaul/MyVnvs/development/dev/collections/ansible_collections/cisco/ios
+    resource: logging_global
+    collection_org: cisco
+    collection_name: ios
+    ansible_connection: local

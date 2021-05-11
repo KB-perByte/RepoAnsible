@@ -1,0 +1,9 @@
+---
+- name: Logging global check GATHERED state
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Gather listed logging config with provided configurations
+    cisco.ios.ios_logging_global:
+      config:
+      state: gathered

@@ -1,0 +1,12 @@
+---
+- name: Logging check 1
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Logging simple hostname
+    cisco.ios.ios_logging_global:
+      config:
+        - console:
+            xml: True
+            severity: critical
+      state: merged

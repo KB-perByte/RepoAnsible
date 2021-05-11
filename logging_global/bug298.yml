@@ -1,0 +1,8 @@
+---
+- name: bug 298
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: ping
+    ios_ping:
+      dest: 10.8.38.66

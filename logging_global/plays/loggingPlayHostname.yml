@@ -1,0 +1,10 @@
+---
+- name: Logging check 1
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Logging simple hostname
+    cisco.ios.ios_logging_global:
+      config:
+        - hostname : 10.0.9.9
+      state: merged

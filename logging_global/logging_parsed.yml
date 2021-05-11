@@ -1,0 +1,10 @@
+---
+- name: Logging global check PARSED state
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Parse the provided configuration with the exisiting running configuration
+    register: result
+    cisco.ios.ios_logging_global:
+      running_config: "{{ lookup('file', 'parsed.cfg') }}"
+      state: parsed

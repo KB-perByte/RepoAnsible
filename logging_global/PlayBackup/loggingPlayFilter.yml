@@ -1,0 +1,13 @@
+---
+- name: Logging check 2
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Logging buffered
+    cisco.ios.ios_logging_global:
+      config:
+        - filter:
+            - url: tftp://10.0.2.15/ESM/escalate.tcl
+              order: 1
+              args: WORKS
+      state: merged

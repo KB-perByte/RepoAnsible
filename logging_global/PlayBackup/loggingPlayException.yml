@@ -1,0 +1,10 @@
+---
+- name: Logging check 2
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Logging buffered
+    cisco.ios.ios_logging_global:
+      config:
+        - exception: 5555
+      state: overridden

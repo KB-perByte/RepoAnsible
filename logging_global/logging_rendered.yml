@@ -1,0 +1,73 @@
+---
+- name: Logging global check RENDERED state
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Render the commands for provided configuration
+    cisco.ios.ios_logging_global:
+      config:
+        - buginf: True
+        - buffered:
+            severity: notifications
+            size: 5099
+            xml: True
+        - cns_events: warnings
+        - console:
+            severity: critical
+            xml: True
+        - count: True
+        - delimiter:
+            tcp: True
+        - discriminator: msglog01 severity includes 5
+        - dmvpn:
+            rate_limit: 10
+        - esm:
+            config: True
+        - exception: 4099        
+        - facility: local5
+        - filter:
+            - url: tftp://10.0.2.18/ESM/elate.tcl
+              args: TESTInst2
+            - url: tftp://10.0.2.14/ESM/escalate.tcl
+              args: TESTInst
+        - history:
+            severity: alerts
+        - hosts: 
+          - hostname: 10.0.1.1
+          - hostname: 10.0.1.11
+            xml: True
+            transport:
+              tcp: 
+                port: 514
+          - hostname: 10.0.1.10
+            filtered: True
+            stream: 10
+        - message_counter:
+            - log
+            - syslog
+        - monitor:
+            severity: warnings
+        - origin_id:
+            tag: hostname
+        - persistent:
+            batch: 4444
+        - policy_firewall:
+            rate_limit: 10
+        - queue_limit:
+            esm: 150
+        - rate_limit:
+            all: True
+            size: 2
+            except_severity: alerts
+        - reload: 
+            severity: alerts
+        - server_arp: True
+        - snmp_trap: errors
+        - source_interface:
+            - interface: GBit1/0
+            - interface: CTunnel2
+        - trap: errors
+        - userinfo: True
+        - logging_on: disable
+        #- logging_on: enable
+      state: rendered

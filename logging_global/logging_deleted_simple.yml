@@ -1,0 +1,8 @@
+---
+- name: Logging global check REPLACED state
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Remove as per the provided configuration
+    cisco.ios.ios_logging_global:
+      state: deleted

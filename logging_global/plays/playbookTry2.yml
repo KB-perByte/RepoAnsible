@@ -1,0 +1,12 @@
+---
+- name: OSPF
+  hosts: iosl2lab
+  gather_facts: no
+  tasks:
+  - name: ios show version
+    cisco.ios.ios_command:
+      commands: reload at 10:00 11 Apr 
+
+  - name: reload cancel ios 
+    cisco.ios.ios_command:
+      commands: reload cancel

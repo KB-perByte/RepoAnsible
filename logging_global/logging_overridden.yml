@@ -1,0 +1,19 @@
+---
+- name: Logging global check overridden state
+  hosts: ioslab
+  gather_facts: no
+  tasks:
+  - name: Apply commands for provided configuration
+    cisco.ios.ios_logging_global:
+      config:
+        - monitor:
+            severity: critical
+        - buffered:
+            severity: warnings
+            xml: True
+            size: 5099
+        - facility: local6
+        - hosts: 
+            - hostname: 10.0.1.12
+              xml: True
+      state: overridden
